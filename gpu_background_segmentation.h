@@ -8,6 +8,7 @@
 #include <vector>
 #include <time.h>
 #include <omp.h>
+#define NUM_STREAMS 2
 
 using namespace cv;
 using namespace std;
@@ -35,10 +36,11 @@ private:
 	double threashold = .006;
 	 //Histogram update interval in terms of frames
 	int update_interval = 8;
-	 //Pointers to allocated memory for the binary and
+	 //Pointers to allocated page-locked memory for the binary and
 	 // original frames
-	uchar* framePtr[NUM_STREAMS];// = new uchar[rows * cols * 3];
-	uchar* binPtr[NUM_STREAMS];// = new uchar[rows * cols];
+	uchar* framePtr[NUM_STREAMS];
+	uchar* binPtr[NUM_STREAMS];
+	 //Pointers to memory allocated on the device (GPU)
 	uchar* d_binPtr;
 	uchar* d_framePtr[NUM_STREAMS];
 	 //Size variables
@@ -60,4 +62,3 @@ public:
 };
 
 #endif
-int
